@@ -50,7 +50,7 @@ export const register = async (req, res, next) => {
       resetTokenExpiration: Date.now() + 3600000,
     });
 
-    const resetLink = `http://localhost:5173/verify-email/${resetToken}`;
+    const resetLink = `http://3.27.6.29:5173/verify-email/${resetToken}`;
 
     const subject = "Please verify your email address";
 
@@ -203,7 +203,7 @@ export const forgetPassword = async (req, res, next) => {
     userExist.resetTokenExpiration = Date.now() + 3600000;
     await userExist.save();
 
-    const resetLink = `http://localhost:5173/reset-password/${resetToken}`;
+    const resetLink = `http://3.27.6.29:5173/reset-password/${resetToken}`;
 
     const subject = "Reset your password ";
 
