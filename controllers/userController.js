@@ -107,6 +107,7 @@ export const Login = async (req, res, next) => {
       token,
     });
   } catch (error) {
+    console.log(error);
     return next(new HttpError(`Failed to login`, 500));
   }
 };
