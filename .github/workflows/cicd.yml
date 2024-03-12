@@ -6,35 +6,28 @@ on:
       - master
 
 jobs:
-  build:
+  build: 
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source
         uses: actions/checkout@v4
       - name: Login to docker hub
-        run: docker login -u ${{secrets.DOCKER__USERNAME}} -p ${{secrets.DOCKER__PASSWORD}}
+        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
       - name: Build docker image
         run: docker build -t ajaysonere/trade-web-server .
       - name: Publish image to docker hub
         run: docker push ajaysonere/trade-web-server:latest
-
+        
   deploy:
-     needs: build
-     runs-on: self-hosted
-     steps:
-       - name: Debug Secrets
-         run: |
-           echo "MONGO_URL=${{secrets.MONGO_URL}}"
-           echo "JWT_SECRET=${{secrets.JWT_SECRET}}"
-           echo "PORT=${{secrets.PORT}}"
-           echo "EMAIL_USER=${{secrets.EMAIL_USER}}"
-           echo "PASSWORD=${{secrets.PASSWORD}}"
-       - name: Give the permission to docker hub
-         run: sudo chmod 666 /var/run/docker.sock
-       - name: Pull image from docker hub
-         run: docker pull ajaysonere/trade-web-server
-       - name: Delete the previous container
-         run: docker rm -f trade-server
-       - name: Run the docker image
-         run: docker run -dp 4500:4500 --name trade-server -e MONGO_URL=${{secrets.MONGO_URL}} ajaysonere/trade-web-server
-         
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Give the permission to docker hub
+        run:  sudo chmod 666 /var/run/docker.sock
+      - name: Pull image from docker hub
+        run: docker pull ajaysonere/trade-web-server
+      - name: Delete the previous container
+        run: docker rm -f trade-server-container
+      - name: Run the docker image
+        run: docker run -d -p 4500:4500 --name trade-server-container -e MONGO_PASSWORD=${{secrets.MONGO_URL}} ajaysonere/trade-web-server:latest
+    
