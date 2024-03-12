@@ -22,6 +22,13 @@ jobs:
      needs: build
      runs-on: self-hosted
      steps:
+       - name: Debug Secrets
+         run: |
+           echo "MONGO_URL=${{secrets.MONGO_URL}}"
+           echo "JWT_SECRET=${{secrets.JWT_SECRET}}"
+           echo "PORT=${{secrets.PORT}}"
+           echo "EMAIL_USER=${{secrets.EMAIL_USER}}"
+           echo "PASSWORD=${{secrets.PASSWORD}}"
        - name: Give the permission to docker hub
          run: sudo chmod 666 /var/run/docker.sock
        - name: Pull image from docker hub
