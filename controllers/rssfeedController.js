@@ -3,7 +3,6 @@ import fs from "fs";
 import csv from "csv-parser";
 import path, { dirname, join } from "path";
 import { fileURLToPath } from "url";
-// import HttpError from "../models/errorModel";
 import companyModel from "../models/companyModel.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

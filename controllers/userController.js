@@ -68,6 +68,8 @@ export const register = async (req, res, next) => {
 export const Login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+    
+    console.log(req.body);
 
     if (!email || !password) {
       return next(new HttpError(`Please fill all fields`, 422));
