@@ -20,6 +20,7 @@ const server = http.createServer(app);
 const webSocketServer = new WebSocketServer({ server });
 
 const connection = async () => {
+
   const conn = await mongoose.connect(process.env.MONGO_URL);
 
   if (!conn) {
