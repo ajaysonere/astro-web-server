@@ -27,8 +27,7 @@ jobs:
        - name: Pull image from docker hub
          run: docker pull ajaysonere/trade-web-server
        - name: Delete the previous container
-         run: docker rm -f trade-web-server
+         run: docker rm -f trade-server
        - name: Run the docker image
-         run: docker run -d -p 4500:4500 --name trade-web-server -e MONGO_URL=${{secrets.MONGO_URL}} -e JWT_SECRET=${{secrets.JWT_SECRET}} -e PORT=${{secrets.PORT}} -e EMAIL_USER=${{secrets.EMAIL_USER}} -e PASSWORD=${{secrets.PASSWORD}} ajaysonere/trade-web-server
-
+         run: docker run -d -p 4500:4500 --name trade-server -e MONGO_URL=${{secrets.MONGO_URL}} ajaysonere/trade-web-server
          
