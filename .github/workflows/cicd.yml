@@ -29,5 +29,5 @@ jobs:
        - name: Delete the previous container
          run: docker rm -f trade-server
        - name: Run the docker image
-         run: docker run -d -p 4500:4500 --name trade-server ajaysonere/trade-web-server:latest
+         run: docker run -d -p 4500:4500 --name trade-server -e MONGO_URL=`${{secrets.MONGO_URL}}` ajaysonere/trade-web-server:latest
          
