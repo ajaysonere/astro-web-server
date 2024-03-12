@@ -14,6 +14,7 @@ import rssRoute from "./routes/rssRoute.js";
 const app = express();
 
 const PORT = process.env.PORT || 4500;
+const PASSWORD  = process.env.MONGO__PASSWORD;
 
 // Create an HTTP server and attach the WebSocket server to it
 const server = http.createServer(app);
@@ -21,7 +22,9 @@ const webSocketServer = new WebSocketServer({ server });
 
 const connection = async () => {
 
-  const conn = await mongoose.connect(process.env.MONGO_URL);
+  const conn = await mongoose.connect(
+    `mongodb+srv://ajaysonere786:${PASSWORD}@cluster0.3shuftg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
+  );
 
   if (!conn) {
     console.log("Something went wrong");
