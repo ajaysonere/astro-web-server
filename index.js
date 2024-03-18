@@ -48,23 +48,25 @@ webSocketServer.on("connection", (ws) => {
   });
 });
 
-const frontend = path.join(__dirname + "../web-client/dist");
 
-console.log(__dirname);
-console.log(frontend);
-
-app.use("/", express.static(frontend));
-
-
-app.use(function (req, res, next) {
-  res.sendFile(path.join(frontend, "index.html"));
-});
 
 
 (async () => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(cors());
+  
+  
+  const frontend = path.join(__dirname + "../web-client/dist");
+
+  console.log(__dirname);
+  console.log(frontend);
+
+  app.use("/", express.static(frontend));
+
+  app.use(function (req, res, next) {
+    res.sendFile(path.join(frontend, "index.html"));
+  });
 
   app.get("/", (req, res) => {
     res.send("App is running");
