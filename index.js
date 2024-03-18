@@ -10,21 +10,18 @@ import adminRoute from "./routes/adminRoute.js";
 import HttpError from "./models/errorModel.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 import rssRoute from "./routes/rssRoute.js";
-import path, { dirname } from "path";
-import { fileURLToPath } from "url";
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 
 const PORT = process.env.PORT || 4500;
-const PASSWORD = process.env.MONGO_PASSWORD;
+const PASSWORD  = process.env.MONGO_PASSWORD;
 
 // Create an HTTP server and attach the WebSocket server to it
 const server = http.createServer(app);
 const webSocketServer = new WebSocketServer({ server });
 
 const connection = async () => {
+
   const conn = await mongoose.connect(
     `mongodb+srv://ajaysonere786:2JRN5rUOYYAMvnKm@cluster0.5u9pb3p.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
   );
@@ -48,26 +45,11 @@ webSocketServer.on("connection", (ws) => {
   });
 });
 
-
-
-
 (async () => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(cors());
   
-  
-  const frontend = path.join(__dirname + "../web-client/dist");
-
-  console.log(__dirname);
-  console.log(frontend);
-
-  app.use("/", express.static(frontend));
-
-  app.use(function (req, res, next) {
-    res.sendFile(path.join(frontend, "index.html"));
-  });
-
   app.get("/", (req, res) => {
     res.send("App is running");
   });
@@ -78,6 +60,7 @@ webSocketServer.on("connection", (ws) => {
   app.use("/api", rssRoute);
   app.use(notFound, errorHandler);
   app.use(HttpError);
+
 
   server.listen(PORT, () => {
     connection();
