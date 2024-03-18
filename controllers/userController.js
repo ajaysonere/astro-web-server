@@ -268,6 +268,8 @@ export const resetPassword = async (req, res, next) => {
 export const verifyEmail = async (req, res, next) => {
   try {
     const token = req.params.token;
+    
+    console.log(token);
 
     const userExist = await userModel.findOne({ resetToken: token });
 
