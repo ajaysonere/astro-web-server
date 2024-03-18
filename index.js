@@ -22,7 +22,9 @@ const webSocketServer = new WebSocketServer({ server });
 
 const connection = async () => {
 
-  const conn = await mongoose.connect(`mongodb+srv://ajaysonere786:S54gCTurtfJH7AfY@cluster0.3shuftg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`);
+  const conn = await mongoose.connect(
+    `mongodb+srv://ajaysonere786:2JRN5rUOYYAMvnKm@cluster0.5u9pb3p.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
+  );
 
   if (!conn) {
     console.log("Something went wrong");
