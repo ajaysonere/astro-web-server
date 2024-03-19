@@ -61,7 +61,7 @@ export const register = async (req, res, next) => {
 
     res.status(201).json(`New user ${email} registered`);
   } catch (error) {
-    return next(new HttpError(`Failed to register user`, 500));
+    return next(new HttpError(`Failed to register user ${error}`, 500));
   }
 };
 
@@ -206,7 +206,7 @@ export const forgetPassword = async (req, res, next) => {
     userExist.resetTokenExpiration = Date.now() + 3600000;
     await userExist.save();
 
-    const resetLink = `http://3.27.6.29:5173/reset-password/${resetToken}`;
+    const resetLink = `http://3.27.6.29:5173/#/reset-password/${resetToken}`;
 
     const subject = "Reset your password ";
 
