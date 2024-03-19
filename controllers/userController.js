@@ -50,7 +50,7 @@ export const register = async (req, res, next) => {
       resetTokenExpiration: Date.now() + 3600000,
     });
 
-    const resetLink = `http://3.27.6.29:5173/verify-email/${resetToken}`;
+    const resetLink = `http://3.27.6.29:5173/#/verify-email/${resetToken}`;
 
     const subject = "Please verify your email address";
 
