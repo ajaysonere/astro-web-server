@@ -69,6 +69,8 @@ export const createTrade = async (req, res, next) => {
   }
 };
 
+
+// get all trade from the server
 export const getAllTrade = async (req, res) => {
   try {
     const response = await tradeModel.find();
@@ -82,6 +84,8 @@ export const getAllTrade = async (req, res) => {
   }
 };
 
+
+// it will filter the trade and send it to the frontend
 export const getTradeByCategory = async (req, res, next) => {
   try {
     const category = req.params.category;

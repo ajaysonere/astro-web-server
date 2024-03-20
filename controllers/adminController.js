@@ -55,6 +55,7 @@ export const getAllUsers = async (req, res, next) => {
   }
 };
 
+// update the user detals by admin
 export const updateUser = async (req, res, next) => {
   try {
     const userId = req.params.id;
@@ -93,6 +94,8 @@ export const updateUser = async (req, res, next) => {
   }
 };
 
+
+// this is controller help us to delete the user
 export const deleteUser = async (req, res, next) => {
   try {
     const id = req.params.id;
@@ -114,6 +117,8 @@ export const deleteUser = async (req, res, next) => {
   }
 };
 
+
+// get the users from the database
 export const getUser = async (req, res, next) => {
   try {
     const userId = req.params.id;
