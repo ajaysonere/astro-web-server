@@ -10,16 +10,18 @@ import adminRoute from "./routes/adminRoute.js";
 import HttpError from "./models/errorModel.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 import rssRoute from "./routes/rssRoute.js";
-
+import path , {dirname} from "path";
+import { fileURLToPath } from "url";
 const app = express();
 
 const PORT = process.env.PORT || 4500;
 const PASSWORD  = process.env.MONGO_PASSWORD;
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
-// Create an HTTP server and attach the WebSocket server to it
 const server = http.createServer(app);
 const webSocketServer = new WebSocketServer({ server });
 
+// database connection
 const connection = async () => {
 
   const conn = await mongoose.connect(
@@ -49,6 +51,10 @@ webSocketServer.on("connection", (ws) => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(cors());
+  
+  const uploadsPath = path.join(__dirname, "uploads");
+  app.use("/uploads", express.static(uploadsPath));
+
   
   app.get("/", (req, res) => {
     res.send("App is running");

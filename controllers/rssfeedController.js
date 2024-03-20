@@ -24,6 +24,7 @@ const parse = async (url) => {
 
 parse(feedURL);
 
+// get the artical and send it to frontend
 export const rssFeed = (req, res, next) => {
   try {
     if (artical.length <= 0) {
@@ -35,6 +36,8 @@ export const rssFeed = (req, res, next) => {
   }
 };
 
+
+//  reading the csv file and stored the data into the database
 const readCSVFile = (filePath) => {
   return new Promise((resolve, reject) => {
     const tableData = [];

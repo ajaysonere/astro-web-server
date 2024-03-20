@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
 
+// send email for verification and reset password
 export const verifyGmail = (email , resetLink , subject , message) => {
    console.log("Enters email");
    const transporter = nodemailer.createTransport({

@@ -4,6 +4,7 @@ import userModel from "../models/userModel.js";
 import path , {dirname} from 'path';
 import {fileURLToPath} from 'url';
 
+//  handle the news letter upload
 export const newsLetterUpload = async (req, res, next) => {
   try {
     if (!req.file) {
@@ -14,9 +15,11 @@ export const newsLetterUpload = async (req, res, next) => {
     
     const __dirname = dirname(fileURLToPath(import.meta.url));
     
+    console.log(req.file);
+    
     const link = path.join(__dirname , `../uploads/${fileName}`)
 
-    const response = await newsletterModel.create({ name:fileName , link:link});
+    const response = await newsletterModel.create({ name:fileName , link:req.file.path});
 
     res.status(200).json("File uploaded successfully");
   } catch (error) {
@@ -26,6 +29,7 @@ export const newsLetterUpload = async (req, res, next) => {
 };
 
 
+// fetch all the news letter from the database
 export const getNewsLetter = async(req , res , next) => {
      try {
          const response = await newsletterModel.find({});
@@ -35,6 +39,8 @@ export const getNewsLetter = async(req , res , next) => {
      }
 }
 
+
+// get all users
 export const getAllUsers = async (req, res, next) => {
   try {
     const data = await userModel.find().select("-password");

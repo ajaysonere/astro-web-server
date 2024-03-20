@@ -4,7 +4,7 @@ export const notFound = (req, res, next) => {
   next(error);
 };
 
-
+// making an custom error handler
 export const errorHandler = (error, req, res, next) => {
   if (res.headerSent) {
     return next(error);

@@ -1,5 +1,7 @@
 import multer from "multer";
 
+// for uploading the file to server
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/");
