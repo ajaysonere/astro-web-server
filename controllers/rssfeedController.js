@@ -4,6 +4,7 @@ import csv from "csv-parser";
 import path, { dirname, join } from "path";
 import { fileURLToPath } from "url";
 import companyModel from "../models/companyModel.js";
+import indianCompanyModel from "../models/indianCompanyModel.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -41,7 +42,6 @@ export const rssFeed = (req, res, next) => {
 const readCSVFile = (filePath) => {
   return new Promise((resolve, reject) => {
     const tableData = [];
-
     const readStream = fs.createReadStream(filePath);
 
     readStream
@@ -54,26 +54,55 @@ const readCSVFile = (filePath) => {
         tableData.push(extractedData);
       })
       .on("end", () => {
-        // All data has been read
         resolve(tableData);
       })
       .on("error", (error) => {
         reject(error);
       });
+      
   });
 };
 
-export const companiesName = async (req, res, next) => {
+
+export const setCompaniesName = async (req , res , next) => {
+   try {
+        const csvFilePath = join(__dirname, "../companiesData.csv");
+        const csvFilePath1 = join(__dirname , "../indianStock.csv");
+
+        
+        const tableData = await readCSVFile(csvFilePath);
+        
+        const tableData1 = await readCSVFile(csvFilePath1);
+
+        await indianCompanyModel.insertMany(tableData1);
+        
+        await companyModel.insertMany(tableData);
+        
+        res.status(200).json("Successfully companies data inserted in db");
+        
+   } catch (error) {
+      console.log(error);
+      return res.status(500).json("Failed to set companies data");
+   }
+}
+
+
+export const getCompaniesName = async (req, res, next) => {
   try {
-    const csvFilePath = join(__dirname, "../companiesData.csv");
-    const tableData = await readCSVFile(csvFilePath);
-
-    // Save the data to the database using companyModel.insertMany()
-    await companyModel.insertMany(tableData);
-
-    res.status(200).json(tableData); // Respond with the data if needed
+    const data = await companyModel.find();
+    
+    res.status(200).json(data);
   } catch (error) {
-    console.error("Error:", error);
     return res.status(500).json("failed to fetch data");
   }
 };
+
+export const getIndianCompaniesName = async (req , res ,next) => {
+    try {
+       const data = await indianCompanyModel.find();
+       
+       res.status(200).json(data);
+    } catch (error) {
+      return res.status(500).json("failed to fetch data ");
+    }
+}

@@ -6,8 +6,8 @@ export const verifyGmail = (email , resetLink , subject , message) => {
    const transporter = nodemailer.createTransport({
      service: "gmail",
      auth: {
-       user: "ajaysonere472@gmail.com",
-       pass: "lyvb ipkf dalg wzrs",
+       user: process.env.EMAIL_USER,
+       pass: process.env.PASSWORD,
      },
    });
 
