@@ -21,10 +21,14 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const server = http.createServer(app);
 const webSocketServer = new WebSocketServer({ server });
 
+const MONGO = process.env.MONGO_URL;
+
+console.log(MONGO);
+
 // database connection
 const connection = async () => {
 
-  const conn = await mongoose.connect(process.env.MONGO_URL);
+  const conn = await mongoose.connect(MONGO);
 
   if (!conn) {
     console.log("Something went wrong");
