@@ -23,8 +23,6 @@ const webSocketServer = new WebSocketServer({ server });
 
 const MONGO = process.env.MONGO_URL;
 
-console.log(MONGO);
-
 // database connection
 const connection = async () => {
 
